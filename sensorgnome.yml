@@ -3,11 +3,11 @@
   become: yes
   gather_facts: no
   roles:
-    # - install-compile-vamp-alsa-host
-    # - install-compile-vamp-plugins
-    # - install-compile-fcd
-    # - install-original-sg-dependencies
-    # - sensorgnome
-    # - sensorgnome-boot
+    - install-compile-vamp-alsa-host
+    - install-compile-vamp-plugins
+    - install-compile-fcd
+    - install-original-sg-dependencies
+    - sensorgnome
+    - sensorgnome-boot
     - post-sg-tasks
-    # - rtlsdr
+    - rtlsdr
