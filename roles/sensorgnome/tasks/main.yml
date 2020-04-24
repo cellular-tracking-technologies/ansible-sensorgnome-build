@@ -1,0 +1,37 @@
+---
+- name: make data folder 
+  become: yes 
+  file:
+    path: /data
+    state: directory
+    owner: pi
+
+- name: git sensorgnome code
+  become: yes
+  become_user: pi
+  git:
+    repo: https://github.com/cellular-tracking-technologies/sensorgnome.git
+    dest: /home/pi/proj/sensorgnome
+
+- name: ensure /data/sg_files directory exists
+  become: yes
+  file:
+    path: /data/sg_files
+    state: directory
+    owner: pi
+
+- name: get default deployment from sg website
+  get_url:
+    url: https://public.sensorgnome.org/default_deployment.txt
+    dest: /data/sg_files/default_deployment.txt
+
+- name: copy files
+  copy: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "files/sg_version.txt", dest: "/data/sg_files/SENSORGNOME_VERSION.TXT" }
+    - { src: "files/network.txt", dest: "/data/sg_files/newtork.txt" }
+    - { src: "files/brinker-deployment.txt", dest: "/data/sg_files/deployment.txt" }
+    - { src: "files/SG_tag_database.csv", dest: "/data/sg_files/SG_tag_database.csv" }
+    - { src: "files/SG_tag_database.sqlite", dest: "/data/sg_files/SG_tag_database.sqlite" }

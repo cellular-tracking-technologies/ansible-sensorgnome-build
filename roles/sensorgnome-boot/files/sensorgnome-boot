@@ -1,0 +1,13 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          sensorgnome-boot
+# Required-Start:    $local_fs urandom
+# Required-Stop:     
+# Default-Start:     S
+# Default-Stop:
+# X-Start-Before:    networking
+# Short-Description: sensorgnome-boot
+# Description:       do boot-time sensorgnome tasks
+### END INIT INFO
+
+/home/pi/proj/sensorgnome/scripts/boottime_compute.sh

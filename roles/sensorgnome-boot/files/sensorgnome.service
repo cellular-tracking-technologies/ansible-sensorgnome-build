@@ -1,0 +1,12 @@
+[Unit]
+Description=Sensorgnome Startup
+After=network.target
+
+[Service]
+ExecStart=nohup /etc/ctt/start-sensorgnome.sh
+Type=simple
+PIDFile=/tmp/sensorgnome-service.id
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target station-boot.service

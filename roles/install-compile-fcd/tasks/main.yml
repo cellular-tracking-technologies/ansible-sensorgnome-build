@@ -1,0 +1,19 @@
+---
+- name: requires lib-usb dev library
+  become: yes
+  apt:
+    name: libusb-1.0-0-dev
+    state: latest
+
+- name: git fcd source
+  become: yes
+  become_user: pi
+  git:
+    repo: https://github.com/bobfogg/fcd.git
+    dest: /home/pi/proj/fcd
+
+- name: install fcd
+  become: yes
+  make:
+    chdir: /home/pi/proj/fcd
+    target: install

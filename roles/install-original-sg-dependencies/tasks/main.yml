@@ -1,0 +1,13 @@
+---
+- name: apt install packages for original sensorgnome
+  become: yes
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - vsftpd
+      - autossh
+      - udhcpd
+      - libjson-perl
+

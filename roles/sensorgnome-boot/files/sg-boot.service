@@ -1,0 +1,9 @@
+[Unit]
+Description=SG Boot
+After=network.target
+
+[Service]
+ExecStart=/home/pi/proj/sensorgnome/scripts/boottime_compute.sh
+
+[Install]
+WantedBy=multi-user.target

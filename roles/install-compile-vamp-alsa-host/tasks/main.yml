@@ -1,0 +1,34 @@
+---
+- name: install library dependencies 
+  become: true
+  apt: 
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - vamp-plugin-sdk
+    - libasound2-dev
+    - libboost-all-dev
+    - fftw3
+    - fftw3-dev
+
+- name: git vamp-alsa-host
+  become: yes
+  become_user: pi
+  git:
+    repo: https://github.com/bobfogg/vamp-alsa-host.git
+    dest: /home/pi/proj/vamp-alsa-host
+
+- name: build vamp-alsa-host code
+  become: yes
+  become_user: pi
+  make:
+    chdir: /home/pi/proj/vamp-alsa-host
+    file: /home/pi/proj/vamp-alsa-host/Makefile_rpi
+
+- name: install vamp-alsa-host 
+  become: yes
+  make:
+    chdir: /home/pi/proj/vamp-alsa-host
+    target: install
+    file: /home/pi/proj/vamp-alsa-host/Makefile_rpi

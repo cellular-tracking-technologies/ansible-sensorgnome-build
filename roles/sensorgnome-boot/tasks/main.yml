@@ -1,0 +1,56 @@
+---
+- name: ensure sesnorgnome dev dir exists
+  become: yes
+  file:
+    path: /dev/sensorgnome/usb
+    state: directory
+
+- name: copy bootcount startup script
+  become: yes
+  copy:
+    src: files/sg-boot.service
+    dest: /etc/systemd/system/bootcount.service
+    mode: 0755
+
+- name: copy sensorgnome startup bash script
+  become: yes
+  copy:
+    src: files/start-sensorgnome.sh
+    dest: /etc/ctt/start-sensorgnome.sh
+    mode: 0755
+
+- name: copy sg master process script
+  become: yes
+  copy:
+    src: files/sensorgnome.service
+    dest: /etc/systemd/system/sensorgnome.service
+    mode: 0755
+
+- name: enable sg boot script
+  become: yes
+  systemd:
+    name: bootcount 
+    state: started
+    enabled: yes
+
+- name: enable sg master process
+  become: yes
+  systemd:
+    name: sensorgnome
+    state: started
+    enabled: yes
+
+- name: link udev rules
+  become: yes
+  file:
+    src: /home/pi/proj/sensorgnome/udev-rules/usb-compute-hub.rules
+    dest: /etc/udev/rules.d/80-sg-usb-compute.rules
+    state: link
+    remote_src: yes
+
+- name: copy v2 port enumeration file
+  become: yes
+  become_user: pi
+  copy:
+    src: files/usb_hub_rules.txt
+    dest: /data/usb_hub_rules.txt

@@ -1,0 +1,24 @@
+---
+- name: generate beagle bone id
+  become: yes
+  copy:
+    dest: /etc/beaglebone_id
+    content: '1234CTT5678'
+
+- name: create bootcount file
+  become: yes
+  copy:
+    dest: /etc/bootcount
+    content: '0'
+
+- name: ensure boottime_compute.sh is executable
+  become: yes
+  file:
+    path: /home/pi/proj/sensorgnome/scripts/boottime_compute.sh
+    mode: 0755
+
+- name: npm install node dependencies for sensorgnome
+  become: yes
+  become_user: pi
+  npm:
+    path: /home/pi/proj/sensorgnome/master

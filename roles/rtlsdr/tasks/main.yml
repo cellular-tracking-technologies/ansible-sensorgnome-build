@@ -1,0 +1,36 @@
+---
+- name: install cmake
+  become: yes
+  apt:
+    name: cmake
+    state: latest
+
+- name: blacklist modules for rtlsdr to work
+  become: yes
+  copy:
+    src: files/no-rtl.conf
+    dest: /etc/modprobe.d/no-rtl.conf
+
+- name: git librtlsdr
+  become: yes
+  git:
+    repo: https://github.com/bobfogg/librtlsdr.git
+    dest: /tmp/librtlsdr
+    version: d9bbeea45568b0191e4ea0b081be427b18a893f
+
+- name: make build directory
+  become: yes
+  file:
+    path: /tmp/librtlsdr/build
+    state: directory
+
+- name: run cmake on rtlsdr
+  become: yes 
+  shell:
+    cmd: "{{ item.cmd }}"
+    chdir: /tmp/librtlsdr/build
+  with_items:
+    - { cmd: 'cmake ../' }
+    - { cmd: 'make' }
+    - { cmd: 'make install' }
+    - { cmd: 'ldconfig' }
