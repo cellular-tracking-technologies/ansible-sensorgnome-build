@@ -6,7 +6,6 @@
     state: latest
   vars:
     packages:
-      - vsftpd
       - autossh
       - udhcpd
       - libjson-perl

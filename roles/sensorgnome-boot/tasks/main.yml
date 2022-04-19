@@ -42,15 +42,15 @@
 
 - name: link udev rules
   become: yes
-  file:
-    src: /home/pi/proj/sensorgnome/udev-rules/usb-compute-hub.rules
-    dest: /etc/udev/rules.d/80-sg-usb-compute.rules
-    state: link
+  ansible.builtin.copy:
     remote_src: yes
+    src: /home/ctt/proj/sensorgnome/udev-rules/usb-compute-hub.rules
+    dest: /etc/udev/rules.d/80-sg-usb-compute.rules
+    follow: yes
 
 - name: copy v2 port enumeration file
   become: yes
-  become_user: pi
-  copy:
+  become_user: ctt 
+  ansible.builtin.copy:
     src: files/usb_hub_rules.txt
     dest: /data/usb_hub_rules.txt

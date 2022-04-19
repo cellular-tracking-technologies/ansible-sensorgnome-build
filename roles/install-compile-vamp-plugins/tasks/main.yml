@@ -1,27 +1,27 @@
 ---
 - name: git vamp-plugins
   become: yes
-  become_user: pi
+  become_user: ctt
   git:
     repo: https://github.com/bobfogg/vamp-plugins.git
-    dest: /home/pi/proj/vamp-plugins
+    dest: /home/ctt/proj/vamp-plugins
 
 - name: build vamp-plugins
   become: yes
-  become_user: pi
+  become_user: ctt
   make:
-    chdir: /home/pi/proj/vamp-plugins/lotek
+    chdir: /home/ctt/proj/vamp-plugins/lotek
 
 - name: verify vamp-plugin folder exists (./.vamp)
   become: yes
-  become_user: pi
+  become_user: ctt 
   file:
-    path: /home/pi/.vamp
+    path: /home/ctt/.vamp
     state: directory
 
 - name: install vamp-plugins
   become: yes
-  become_user: pi
+  become_user: ctt
   make:
-    chdir: /home/pi/proj/vamp-plugins/lotek
+    chdir: /home/ctt/proj/vamp-plugins/lotek
     target: install

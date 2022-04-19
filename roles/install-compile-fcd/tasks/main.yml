@@ -7,13 +7,13 @@
 
 - name: git fcd source
   become: yes
-  become_user: pi
+  become_user: ctt
   git:
     repo: https://github.com/bobfogg/fcd.git
-    dest: /home/pi/proj/fcd
+    dest: /home/ctt/proj/fcd
 
 - name: install fcd
   become: yes
   make:
-    chdir: /home/pi/proj/fcd
+    chdir: /home/ctt/proj/fcd
     target: install
