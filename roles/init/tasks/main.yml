@@ -1,0 +1,9 @@
+---
+- name: ensure software directory exists
+  become: yes
+  ansible.builtin.file:
+    path: "{{ software_dir }}"
+    state: directory
+    mode: 0755
+    owner: "{{ user }}"
+    group: "{{ user }}"

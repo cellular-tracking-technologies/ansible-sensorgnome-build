@@ -4,14 +4,14 @@
   file:
     path: /data
     state: directory
-    owner: ctt
+    owner: "{{ user }}"
 
 - name: git sensorgnome code
   become: yes
-  become_user: ctt
+  become_user: "{{ user }}"
   git:
     repo: https://github.com/cellular-tracking-technologies/sensorgnome.git
-    dest: /home/ctt/proj/sensorgnome
+    dest: "{{ software_dir }}/sensorgnome"
     version: bullseye_v2
 
 - name: ensure /data/sg_files directory exists
@@ -19,12 +19,7 @@
   file:
     path: /data/sg_files
     state: directory
-    owner: ctt 
-
-#- name: get default deployment from sg website
-#  get_url:
-#    url: https://public.sensorgnome.org/default_deployment.txt
-#    dest: /data/sg_files/default_deployment.txt
+    owner: "{{ user }}"
 
 - name: copy files
   copy: 

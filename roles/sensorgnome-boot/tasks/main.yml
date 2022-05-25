@@ -1,56 +1,45 @@
 ---
-- name: ensure sesnorgnome dev dir exists
+- name: ensure sensorgnome dirs exist
   become: yes
-  file:
-    path: /dev/sensorgnome/usb
+  ansible.builtin.file:
+    path: "{{ item.path }}"
     state: directory
+  with_items:
+    - { path: '/dev/sensorgnome/usb' }
+    - { path: '/etc/ctt/sensorgnome' }
 
 - name: copy bootcount startup script
   become: yes
-  copy:
-    src: files/sg-boot.service
-    dest: /etc/systemd/system/bootcount.service
+  ansible.builint.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     mode: 0755
+  with_items:
+    - { src: 'files/sg-boot.service', dest: '/etc/ctt/systemd/bootcount.service' }
+    - { src: 'files/sensorgnome.service', dest: '/etc/ctt/systemd/sensorgnome.service' }
+    - { src: 'files/start-sensorgnome.sh', dest: '/etc/ctt/scripts/start-sensorgnome.sh' }
+    - { src: 'files/usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/usb_hub_rules.txt' }
 
-- name: copy sensorgnome startup bash script
+- name: link udev rules, bootcount and sensorgnome service
   become: yes
-  copy:
-    src: files/start-sensorgnome.sh
-    dest: /etc/ctt/start-sensorgnome.sh
-    mode: 0755
+  ansible.builtin.file:
+    src:  "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  with_items:
+    - { src: "{{ software_dir }}/sensorgnome/udev-rules/usb-compute-hub.rules", dest: '/etc/udev/rules.d/80-sg-usb-compute.rules' }
+    - { src: "{{ software_dir }}/sensorgnome/udev-rules/usb-compute-hub.rules", dest: '/etc/udev/rules.d/80-sg-usb-compute.rules' }
+    - { src: '/etc/ctt/systemd/bootcount.service', dest: '/etc/systemd/system/bootcount.service' }
+    - { src: '/etc/ctt/systemd/sensorgnome.service', dest: '/etc/systemd/system/sensorgnome.service' }
+    - { src: '/etc/ctt/sensorgnome/usb_hub_rules.txt', dest: '/data/usb_hub_rules.txt' }
 
-- name: copy sg master process script
-  become: yes
-  copy:
-    src: files/sensorgnome.service
-    dest: /etc/systemd/system/sensorgnome.service
-    mode: 0755
-
-- name: enable sg boot script
+- name: enable sg boot / master systemd processes
   become: yes
   systemd:
-    name: bootcount 
+    name: "{{ item.name }}"
     state: started
     enabled: yes
+  with_items: 
+    - { name: 'bootcount' }
+    - { name: 'sensorgnome' }
 
-- name: enable sg master process
-  become: yes
-  systemd:
-    name: sensorgnome
-    state: started
-    enabled: yes
-
-- name: link udev rules
-  become: yes
-  ansible.builtin.copy:
-    remote_src: yes
-    src: /home/ctt/proj/sensorgnome/udev-rules/usb-compute-hub.rules
-    dest: /etc/udev/rules.d/80-sg-usb-compute.rules
-    follow: yes
-
-- name: copy v2 port enumeration file
-  become: yes
-  become_user: ctt 
-  ansible.builtin.copy:
-    src: files/usb_hub_rules.txt
-    dest: /data/usb_hub_rules.txt

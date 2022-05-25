@@ -14,11 +14,11 @@
 - name: ensure boottime_compute.sh is executable
   become: yes
   file:
-    path: /home/ctt/proj/sensorgnome/scripts/boottime_compute.sh
+    path: "{{ software_dir }}/sensorgnome/scripts/boottime_compute.sh"
     mode: 0755
 
 - name: npm install node dependencies for sensorgnome
   become: yes
-  become_user: ctt 
+  become_user: "{{ user }}"
   npm:
-    path: /home/ctt/proj/sensorgnome/master
+    path: "{{ software_dir }}/sensorgnome/master"

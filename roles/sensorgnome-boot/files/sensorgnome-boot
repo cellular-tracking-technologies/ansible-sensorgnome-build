@@ -10,4 +10,4 @@
 # Description:       do boot-time sensorgnome tasks
 ### END INIT INFO
 
-/home/pi/proj/sensorgnome/scripts/boottime_compute.sh
+/lib/ctt/sensorgnome/scripts/boottime_compute.sh

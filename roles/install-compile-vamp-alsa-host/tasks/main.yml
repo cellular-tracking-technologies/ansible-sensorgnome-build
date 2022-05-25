@@ -14,21 +14,21 @@
 
 - name: git vamp-alsa-host
   become: yes
-  become_user: ctt
+  become_user: "{{ user }}"
   git:
     repo: https://github.com/bobfogg/vamp-alsa-host.git
-    dest: /home/ctt/proj/vamp-alsa-host
+    dest: "{{  software_dir }}/vamp-alsa-host"
 
 - name: build vamp-alsa-host code
   become: yes
-  become_user: ctt
+  become_user: "{{ user }}"
   make:
-    chdir: /home/ctt/proj/vamp-alsa-host
-    file: /home/ctt/proj/vamp-alsa-host/Makefile_rpi
+    chdir: "{{ software_dir }}/vamp-alsa-host"
+    file: "{{ software_dir }}/vamp-alsa-host/Makefile_rpi"
 
 - name: install vamp-alsa-host 
   become: yes
   make:
-    chdir: /home/ctt/proj/vamp-alsa-host
+    chdir: "{{ software_dir }}/vamp-alsa-host"
     target: install
-    file: /home/ctt/proj/vamp-alsa-host/Makefile_rpi
+    file: "{{ software_dir }}/vamp-alsa-host/Makefile_rpi"
