@@ -9,4 +9,6 @@
       - autossh
       - udhcpd
       - libjson-perl
+      - sqlite3
+      - libsqlite3-dev
 
