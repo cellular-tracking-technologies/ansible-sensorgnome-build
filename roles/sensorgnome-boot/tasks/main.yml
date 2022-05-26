@@ -10,15 +10,16 @@
 
 - name: copy bootcount startup script
   become: yes
-  ansible.builint.copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: 0755
+    mode: "{{ item.mode }}"
   with_items:
-    - { src: 'files/sg-boot.service', dest: '/etc/ctt/systemd/bootcount.service' }
-    - { src: 'files/sensorgnome.service', dest: '/etc/ctt/systemd/sensorgnome.service' }
-    - { src: 'files/start-sensorgnome.sh', dest: '/etc/ctt/scripts/start-sensorgnome.sh' }
-    - { src: 'files/usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/usb_hub_rules.txt' }
+    - { src: 'files/sg-boot.service', dest: '/etc/ctt/systemd/bootcount.service', mode: 0755 }
+    - { src: 'files/sensorgnome.service', dest: '/etc/ctt/systemd/sensorgnome.service', mode: 0755 }
+    - { src: 'files/start-sensorgnome.sh', dest: '/etc/ctt/scripts/start-sensorgnome.sh', mode: 0755}
+    - { src: 'files/v2_usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/v2_usb_hub_rules.txt', mode: 0644 }
+    - { src: 'files/v3_usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/v3_usb_hub_rules.txt', mode: 0644 }
 
 - name: link udev rules, bootcount and sensorgnome service
   become: yes
@@ -31,7 +32,6 @@
     - { src: "{{ software_dir }}/sensorgnome/udev-rules/usb-compute-hub.rules", dest: '/etc/udev/rules.d/80-sg-usb-compute.rules' }
     - { src: '/etc/ctt/systemd/bootcount.service', dest: '/etc/systemd/system/bootcount.service' }
     - { src: '/etc/ctt/systemd/sensorgnome.service', dest: '/etc/systemd/system/sensorgnome.service' }
-    - { src: '/etc/ctt/sensorgnome/usb_hub_rules.txt', dest: '/data/usb_hub_rules.txt' }
 
 - name: enable sg boot / master systemd processes
   become: yes
