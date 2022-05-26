@@ -29,6 +29,6 @@
 - name: copy vamp plugin to .vamp dir
   become: yes
   ansible.builtin.file:
-    path: "{{ software_dir }}/vamp-plugins/lotek/lotek-plugins.so"
+    src: "{{ software_dir }}/vamp-plugins/lotek/lotek-plugins.so"
     dest: "{{ software_dir }}/.vamp/lotek-plugins.so"
     state: link
