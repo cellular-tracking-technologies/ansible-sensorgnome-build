@@ -1,0 +1,25 @@
+---
+- name: install sqlite libraries for tag finder 
+  become: yes
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - sqlite3
+      - libsqlite3-dev
+      - libboost-all-dev
+
+- name: git tag finder
+  become: yes
+  become_user: "{{ user }}"
+  ansible.builtin.git:
+    repo: https://github.com/jbrzusto/find_tags.git
+    dest: "{{ software_dir }}/find_tags"
+    version: find_tags_unifile
+
+- name: make tag finder
+  become: yes
+  become_user: "{{ user }}"
+  make:
+    chdir: "{{ software_dir }}/find_tags"

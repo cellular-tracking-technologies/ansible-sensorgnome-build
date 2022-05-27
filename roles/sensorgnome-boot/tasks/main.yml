@@ -15,11 +15,11 @@
     dest: "{{ item.dest }}"
     mode: "{{ item.mode }}"
   with_items:
-    - { src: 'files/sg-boot.service', dest: '/etc/ctt/systemd/bootcount.service', mode: 0755 }
-    - { src: 'files/sensorgnome.service', dest: '/etc/ctt/systemd/sensorgnome.service', mode: 0755 }
-    - { src: 'files/start-sensorgnome.sh', dest: '/etc/ctt/scripts/start-sensorgnome.sh', mode: 0755}
-    - { src: 'files/v2_usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/v2_usb_hub_rules.txt', mode: 0644 }
-    - { src: 'files/v3_usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/v3_usb_hub_rules.txt', mode: 0644 }
+    - { src: 'files/sg-boot.service', dest: '/etc/ctt/systemd/bootcount.service', mode: "0755" }
+    - { src: 'files/sensorgnome.service', dest: '/etc/ctt/systemd/sensorgnome.service', mode: "0755" }
+    - { src: 'files/start-sensorgnome.sh', dest: '/etc/ctt/scripts/start-sensorgnome.sh', mode: "0755" }
+    - { src: 'files/v2_usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/v2_usb_hub_rules.txt', mode: "0644" }
+    - { src: 'files/v3_usb_hub_rules.txt', dest: '/etc/ctt/sensorgnome/v3_usb_hub_rules.txt', mode: "0644" }
 
 - name: link udev rules, bootcount and sensorgnome service
   become: yes

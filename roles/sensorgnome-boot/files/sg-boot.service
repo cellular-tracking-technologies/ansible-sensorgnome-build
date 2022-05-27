@@ -1,6 +1,6 @@
 [Unit]
 Description=SG Boot
-After=network.target
+After=station-boot.service
 
 [Service]
 ExecStart=/lib/ctt/sensorgnome/sensorgnome/scripts/boottime_compute.sh

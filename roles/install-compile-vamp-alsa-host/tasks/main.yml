@@ -8,7 +8,6 @@
     packages:
     - vamp-plugin-sdk
     - libasound2-dev
-    - libboost-all-dev
     - fftw3
     - fftw3-dev
 
