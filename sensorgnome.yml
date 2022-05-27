@@ -6,13 +6,13 @@
     user: ctt
     software_dir: /lib/ctt/sensorgnome
   roles:
-    # - init
-    # - install-compile-tag-finder
-    # - install-compile-vamp-alsa-host
-    # - install-compile-vamp-plugins
-    # - install-compile-fcd
-    # - install-original-sg-dependencies
-    # - sensorgnome
+    - init
+    - install-compile-tag-finder
+    - install-compile-vamp-alsa-host
+    - install-compile-vamp-plugins
+    - install-compile-fcd
+    - install-original-sg-dependencies
+    - sensorgnome
     - sensorgnome-boot
     - post-sg-tasks
     - rtlsdr
